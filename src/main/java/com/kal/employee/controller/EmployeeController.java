@@ -5,7 +5,7 @@ import com.kal.employee.services.Employee;
 import com.kal.employee.services.JpaEmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
+//import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -22,12 +22,12 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class EmployeeController {
     @Autowired
     JpaEmployeeRepo jpaEmployeeRepo;
-/***
+
     @GetMapping("/jpa/employees")
     public List<Employee> getAllEmployees() {
         return (List<Employee>) jpaEmployeeRepo.findAll();
     }
-
+/***
     @GetMapping("/jpa/users/{id}")
     public EntityModel<Employee> getUser(@PathVariable int id) {
         Optional<Employee> user = jpaEmployeeRepo.findById(id);
