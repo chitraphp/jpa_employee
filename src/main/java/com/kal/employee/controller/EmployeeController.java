@@ -4,6 +4,8 @@ import com.kal.employee.exceptions.EmployeeNotFoundException;
 import com.kal.employee.services.Employee;
 import com.kal.employee.services.JpaEmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -22,6 +25,9 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 public class EmployeeController {
     @Autowired
     JpaEmployeeRepo jpaEmployeeRepo;
+
+    @Autowired
+    MessageSource messageSource;
 
     @GetMapping("/jpa/employees")
     public List<Employee> getAllEmployees() {
@@ -76,6 +82,11 @@ public class EmployeeController {
         employee.setId(id);
         jpaEmployeeRepo.save(employee);
         return ResponseEntity.noContent().build();
+
+    }
+    @GetMapping("/locale")
+    public String messageIn(@RequestHeader(name="Accept-language",required = false) Locale locale){
+        return messageSource.getMessage("good.morning.message",null, LocaleContextHolder.getLocale());
 
     }
 

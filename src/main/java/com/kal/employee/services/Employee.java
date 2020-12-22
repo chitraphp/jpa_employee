@@ -6,10 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.validation.constraints.DecimalMax;
-import javax.validation.constraints.Email;
-import javax.validation.constraints.Past;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.util.Date;
 
 @ApiModel(description="All details about the employee.")
@@ -32,6 +29,10 @@ public class Employee  {
 
     @Email(message = "Email should be valid")
     private String email;
+
+    //@Pattern("^(\\d{3}[- .]?){2}\\d{4}$")
+    //private Integer phoneNumber;
+
 
     public Employee(String name, Date dateOfBirth, String roll, String email) {
         super();
