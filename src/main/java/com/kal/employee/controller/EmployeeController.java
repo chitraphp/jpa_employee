@@ -5,7 +5,7 @@ import com.kal.employee.services.Employee;
 import com.kal.employee.services.JpaEmployeeRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.EntityModel;
-//import org.springframework.hateoas.Link;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,8 +27,8 @@ public class EmployeeController {
     public List<Employee> getAllEmployees() {
         return (List<Employee>) jpaEmployeeRepo.findAll();
     }
-/***
-    @GetMapping("/jpa/users/{id}")
+
+    @GetMapping("/jpa/employees/{id}")
     public EntityModel<Employee> getUser(@PathVariable int id) {
         Optional<Employee> user = jpaEmployeeRepo.findById(id);
 
@@ -43,7 +43,6 @@ public class EmployeeController {
 
         resource.add(findLink.withRel("all-users"));
         // HATEOAS
-
         return resource;
     }
 
@@ -55,9 +54,31 @@ public class EmployeeController {
                 .toUri();
 
         return ResponseEntity.created(location).build();
+    }
+
+    @DeleteMapping("jpa/employees/{id}")
+    public void deleteEmployee(@PathVariable int id){
+        jpaEmployeeRepo.deleteById(id);
+    }
+
+    @DeleteMapping("jpa/employees")
+    public void deleteEmployees(){
+        jpaEmployeeRepo.deleteAll();
+    }
+
+    @PutMapping("/jpa/employees/{id}")
+    public ResponseEntity<Object> updateEmployee(@PathVariable int id, @Valid @RequestBody Employee employee){
+        Optional<Employee> optionalEmployee = jpaEmployeeRepo.findById(id);
+
+        if(!optionalEmployee.isPresent()){
+            throw new EmployeeNotFoundException("id-"+id);
+        }
+        employee.setId(id);
+        jpaEmployeeRepo.save(employee);
+        return ResponseEntity.noContent().build();
 
     }
 
 
-****/
+
 }

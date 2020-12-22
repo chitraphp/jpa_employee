@@ -1,0 +1,1 @@
+insert into employee values( 200,sysdate(),'suchi@email.com','chitra', 'team leader');
